@@ -1,5 +1,8 @@
 package Arrays.Question_1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class solution {
     public static void main(String[] args) {
         System.out.println("************** Solution 1 ****************");
@@ -8,7 +11,6 @@ public class solution {
         for(int i = 0 ; i < twoSum(numbers,target).length; i++){
             System.out.println(twoSum(numbers, target)[i]);
         }
-
     }
 
     public static int[] twoSum(int[] nums, int target) {
@@ -24,5 +26,22 @@ public class solution {
         }
         return new int[]{};
     }
+
+    public static int[] twoSumOptimal(int[] nums, int target){
+//        List<Integer> newCollection = new ArrayList<>();
+          int[] newCollection = new int[]{};
+        for(int i = 0; i < nums.length; i++){
+            int currentValue = newCollection[nums[i]];
+            if(currentValue >= 0 ){
+                return new int[]{currentValue,i};
+            }
+            else {
+                int numberFinded = target - nums[i];
+                newCollection[numberFinded] = i ;
+            }
+        }
+        return null;
+    }
+
 }
 
