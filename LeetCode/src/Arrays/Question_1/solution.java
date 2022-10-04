@@ -1,15 +1,17 @@
 package Arrays.Question_1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class solution {
     public static void main(String[] args) {
         System.out.println("************** Solution 1 ****************");
-        int[] numbers = new int[]{6,7,10,12,15};
-        int target = 27 ;
-        for(int i = 0 ; i < twoSum(numbers,target).length; i++){
-            System.out.println(twoSum(numbers, target)[i]);
+        int[] numbers = new int[]{1,3,4,2};
+        int target = 5 ;
+        for(int i = 0 ; i < twoSumOptimal(numbers,target).length; i++){
+            System.out.println(twoSumOptimal(numbers, target)[i]);
         }
     }
 
@@ -28,17 +30,15 @@ public class solution {
     }
 
     public static int[] twoSumOptimal(int[] nums, int target){
-//        List<Integer> newCollection = new ArrayList<>();
-          int[] newCollection = new int[]{};
+        Map<Integer, Integer> newHashMap = new HashMap<>();
+
         for(int i = 0; i < nums.length; i++){
-            int currentValue = newCollection[nums[i]];
-            if(currentValue >= 0 ){
-                return new int[]{currentValue,i};
+            int val = target - nums[i];
+
+            if(newHashMap.containsKey(val)){
+                return new int[]{newHashMap.get(val),i};
             }
-            else {
-                int numberFinded = target - nums[i];
-                newCollection[numberFinded] = i ;
-            }
+            newHashMap.put(nums[i],i);
         }
         return null;
     }
