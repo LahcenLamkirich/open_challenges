@@ -1,71 +1,87 @@
 package Strings.Question_1.Question_2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Solution {
     public static void main(String[] args) {
-        System.out.println(numDecodings("1201234"));
+        System.out.println(numDecodings("226"));
     }
 
     public static int numDecodings(String s) {
-        Map<String, String> newMap = new HashMap<>();
+        // Variable declaration:
+        int cmp = 0 ;
         List<String> passedString = new ArrayList<>();
-        int k = 1 ;
-        int cmp = 1 ;
+        List<String> newMap = new ArrayList<>();
+        for(int i = 1 ; i <= 26; i++){
+            newMap.add(String.valueOf(i));
+        }
+        int d = 0 ;
 
+        // Traitment:
         if(s.charAt(0) == '0')
             return 0 ;
-
-        // Create a hash map :
-        for(int i = 65 ; i < 91 ; i++){
-            char caractere = (char) i;
-            newMap.put(String.valueOf(caractere), String.valueOf(k));
-            k = k + 1 ;
-        }
-
-
-        if((s.length() == 2) && s.charAt(s.length()-1) != '0'){
-            if(newMap.containsValue(s)){
+        if(s.length() == 2){
+            if(newMap.contains(s) && s.charAt(1)!='0'){
                 return 2 ;
-            }else{
+            }else {
                 return 1 ;
             }
+        }else if(s.length() == 1)
+            return 1 ;
+
+        // Here I will start the real traitment :
+        System.out.println("The length : " + s.length());
+
+        for(int i = 0 ; i < s.length(); i++){
+            if(newMap.contains(String.valueOf(s.charAt(i)))){
+                d = d + 1 ;
+            }
         }
-        // Traitement : 227 => 2 2 7 => 22 7 ===> 2
+        //226 => 2 2 6
+        if(d == s.length()) cmp++;
+        // 3 caracters substring :
+        if(newMap.contains(String.valueOf(s.charAt(0))) && newMap.contains(s.substring(1))) cmp++ ;
+        if(newMap.contains(s.substring(0,2)) && newMap.contains(String.valueOf(s.charAt(s.length()-1)))) cmp++;
+
+        // More Than 3 caracters :
+        if(s.length() > 3)
+            if(divideFunction(s)) cmp++ ;
+
+        return cmp ;
+    }
+
+    public static boolean divideFunction(String s){
+        int cmp = 0 ;
+        List<String> passedString = new ArrayList<>();
+        List<String> newMap = new ArrayList<>();
+        for(int i = 1 ; i <= 26; i++){
+            newMap.add(String.valueOf(i));
+        }
         for(int i = 0 ; i < s.length(); i++){
             String str1 = s.substring(0,i+1);
             String str2 = s.substring(i+1);
 
-            if(s.length() == 2){
-                String strComplet = s ;
-                if(newMap.containsValue(strComplet)){
-                  cmp = 1 ;
-                }
-            }
             if(!str2.isEmpty()){
-                System.out.println("str1: "+ str1);
-                System.out.println("str2: "+ str2);
-
 
                 if(!passedString.contains(str1))
-                    if(newMap.containsValue(str1) && newMap.containsValue(str2))
-                        cmp++ ; // one
+                    if(newMap.contains(str1) && newMap.contains(str2))
+                       return true ; // one
 
-                if(!newMap.containsValue(str2) && !newMap.containsValue(str1)){
+                if(!newMap.contains(str2) && !newMap.contains(str1)){
                     System.out.println("Concat : " + str2.charAt(0)+str1);
                     System.out.println("-> str2: " + str2);
                     if(str2.charAt(0) != '0'){
-                        if(newMap.containsValue(str2.charAt(0) + str1 )){
+                        if(newMap.contains(str2.charAt(0) + str1 )){
                             passedString.add(str2.charAt(0)+str1);
-                            cmp++ ; // two
+                            return true ;// two
                         }
                     }
                 }
             }
         }
-        return cmp ;
+        return false ;
     }
+
+
 }
