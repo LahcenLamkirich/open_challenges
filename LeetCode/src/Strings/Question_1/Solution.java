@@ -1,4 +1,4 @@
-package Strings.Question_1.Question_2;
+package Strings.Question_1;
 
 import java.util.ArrayList;
 import java.util.List;
