@@ -12,7 +12,7 @@ public class JavaRest {
         HttpServer server = HttpServer.create(new InetSocketAddress(8040),0);
         server.createContext("/api", (exchange -> {
             if("GET".equals(exchange.getRequestMethod())){
-                String response = "Hello It me Lahcen";
+                String response = "Hello It's me Lahcen";
                 exchange.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream outputStream = exchange.getResponseBody();
                 outputStream.write(response.getBytes());
