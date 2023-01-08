@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 public class JavaRest {
 
     public static void main(String[] args) throws IOException {
+
         HttpServer server = HttpServer.create(new InetSocketAddress(8040),0);
         server.createContext("/api", (exchange -> {
             if("GET".equals(exchange.getRequestMethod())){
@@ -17,7 +18,7 @@ public class JavaRest {
                 OutputStream outputStream = exchange.getResponseBody();
                 outputStream.write(response.getBytes());
                 outputStream.flush();
-            }else {
+            } else {
                 exchange.sendResponseHeaders(405,-1);
             }
             exchange.close();
@@ -25,5 +26,7 @@ public class JavaRest {
 
         server.setExecutor(null);
         server.start();
+
     }
+
 }
